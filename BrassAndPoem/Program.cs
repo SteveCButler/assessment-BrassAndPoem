@@ -1,6 +1,8 @@
 ﻿
 //create a "products" variable here to include at least five Product instances. Give them appropriate ProductTypeIds.
+using System.Diagnostics;
 using System.Linq;
+using System.Numerics;
 using System.Security.Cryptography;
 using BrassAndPoem;
 
@@ -126,14 +128,25 @@ void AddProduct()
     Console.Write("Enter the name of the product: ");
     var productName = Console.ReadLine();
     Console.Write("Enter the price: ");
-    var productPrice = Console.ReadLine();
+    var productPrice = Convert.ToDecimal(Console.ReadLine());
     Console.WriteLine("Select product type: ");
+
     foreach(ProductType type in productTypes)
     {
         var index = productTypes.IndexOf(type);
-        Console.WriteLine($"{index}. {type.Title}");
+        Console.WriteLine($"{index + 1}. {type.Title}");
     }
-    var prodType = Console.ReadLine();
+    var prodType = Convert.ToInt32(Console.ReadLine());
+
+    products.Add(
+        new Product()
+        {
+            Name = productName,
+            Price = productPrice,
+            ProductTypeId = prodType
+
+        });
+
 }
 
 //void updateproduct(list<product> products, list<producttype> producttypes)
