@@ -1,6 +1,7 @@
 ﻿
 //create a "products" variable here to include at least five Product instances. Give them appropriate ProductTypeIds.
 using System.Linq;
+using System.Security.Cryptography;
 using BrassAndPoem;
 
 List<Product> products = new List<Product>
@@ -24,12 +25,12 @@ List<Product> products = new List<Product>
     {
         Name = "Emily Dickenson Complete Works",
         Price = 45.00M,
-        ProductTypeId = 1
+        ProductTypeId = 2
     }, new Product
     {
         Name = "Rhyme of the Ancient Mariner",
         Price = 20.00M,
-        ProductTypeId = 1
+        ProductTypeId = 2
     },
 
 };
@@ -85,7 +86,7 @@ void DisplayMenu()
             DeleteProduct();
             break;
         case 3:
-            //AddProduct();
+            AddProduct();
             break;
         case 4:
            // UpdateProduct();
@@ -99,9 +100,11 @@ void DisplayAllProducts()
 {
     for (int i = 0; i < products.Count; i++)
     {
-        Console.WriteLine($"{i + 1}. {products[i].Name} costs ${products[i].Price}");
+        var value = productTypes.First(p => p.Id == products[i].ProductTypeId);
+        //Console.WriteLine(value.Title);
+        
+        Console.WriteLine($"{i + 1}. {products[i].Name}, from our {value.Title} collection, costs ${products[i].Price}");
 
-       
     }
 }
 
@@ -117,10 +120,21 @@ void DeleteProduct()
 
 }
 
-//void addproduct(list<product> products, list<producttype> producttypes)
-//{
-//    throw new notimplementedexception();
-//}
+void AddProduct()
+{
+    Console.WriteLine();
+    Console.Write("Enter the name of the product: ");
+    var productName = Console.ReadLine();
+    Console.Write("Enter the price: ");
+    var productPrice = Console.ReadLine();
+    Console.WriteLine("Select product type: ");
+    foreach(ProductType type in productTypes)
+    {
+        var index = productTypes.IndexOf(type);
+        Console.WriteLine($"{index}. {type.Title}");
+    }
+    var prodType = Console.ReadLine();
+}
 
 //void updateproduct(list<product> products, list<producttype> producttypes)
 //{
@@ -129,3 +143,4 @@ void DeleteProduct()
 
 //don't move or change this!
 public partial class Program { }
+
