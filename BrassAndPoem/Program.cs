@@ -1,5 +1,6 @@
 ﻿
 //create a "products" variable here to include at least five Product instances. Give them appropriate ProductTypeIds.
+using System.Linq;
 using BrassAndPoem;
 
 List<Product> products = new List<Product>
@@ -56,38 +57,75 @@ string choice = null;
 
 while (choice != "5")
 {
-    Console.WriteLine("please choose an option");
-    choice = Console.ReadLine();
-    if (choice == "5")
-    {
-        return;
-    }
+    DisplayMenu();
 
 }
 void DisplayMenu()
 {
-    throw new NotImplementedException();
+    Console.WriteLine();
+    Console.WriteLine(@"
+    ---------MENU---------
+    1. Display All Products
+    2. Delete Product
+    3. Add Product
+    4. Update Product
+    5. Exit
+    ");
+    Console.Write(@"Choice: ");
+    choice = Console.ReadLine();
+    Console.WriteLine();
+
+    int choiceId = int.Parse(choice);
+    switch (choiceId)
+    {
+        case 1:
+            DisplayAllProducts();
+            break;
+        case 2:
+            DeleteProduct();
+            break;
+        case 3:
+            //AddProduct();
+            break;
+        case 4:
+           // UpdateProduct();
+        case 5:
+            return;
+
+    }
 }
 
-void DisplayAllProducts(List<Product> products, List<ProductType> productTypes)
+void DisplayAllProducts()
 {
-    throw new NotImplementedException();
+    for (int i = 0; i < products.Count; i++)
+    {
+        Console.WriteLine($"{i + 1}. {products[i].Name} costs ${products[i].Price}");
+
+       
+    }
 }
 
-void DeleteProduct(List<Product> products, List<ProductType> productTypes)
+void DeleteProduct()
 {
-    throw new NotImplementedException();
+    DisplayAllProducts();
+    Console.WriteLine();
+    Console.WriteLine("Select the product you wish to delete: ");
+
+    int productToDelete = Convert.ToInt32( Console.ReadLine() );
+
+    products.RemoveAt( productToDelete - 1 );
+
 }
 
-void AddProduct(List<Product> products, List<ProductType> productTypes)
-{
-    throw new NotImplementedException();
-}
+//void addproduct(list<product> products, list<producttype> producttypes)
+//{
+//    throw new notimplementedexception();
+//}
 
-void UpdateProduct(List<Product> products, List<ProductType> productTypes)
-{
-    throw new NotImplementedException();
-}
+//void updateproduct(list<product> products, list<producttype> producttypes)
+//{
+//    throw new notimplementedexception();
+//}
 
-// don't move or change this!
+//don't move or change this!
 public partial class Program { }
