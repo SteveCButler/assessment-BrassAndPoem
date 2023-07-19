@@ -1,5 +1,6 @@
 ﻿
 //create a "products" variable here to include at least five Product instances. Give them appropriate ProductTypeIds.
+using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
@@ -37,7 +38,7 @@ List<Product> products = new List<Product>
 
 };
 //create a "productTypes" variable here with a List of ProductTypes, and add "Brass" and "Poem" types to the List. 
-List<ProductType> productTypes = new List<ProductType>
+ List<ProductType> productTypes = new List<ProductType>
 {
     new ProductType
     {
@@ -69,9 +70,9 @@ void DisplayMenu()
     Console.WriteLine(@"
     ---------MENU---------
     1. Display All Products
-    2. Delete Product
-    3. Add Product
-    4. Update Product
+    2. Delete A Product
+    3. Add New Product
+    4. Update Product Properties
     5. Exit
     ");
     Console.Write(@"Choice: ");
@@ -91,7 +92,8 @@ void DisplayMenu()
             AddProduct();
             break;
         case 4:
-           // UpdateProduct();
+            UpdateProduct();
+            break;
         case 5:
             return;
 
@@ -103,8 +105,7 @@ void DisplayAllProducts()
     for (int i = 0; i < products.Count; i++)
     {
         var value = productTypes.First(p => p.Id == products[i].ProductTypeId);
-        //Console.WriteLine(value.Title);
-        
+               
         Console.WriteLine($"{i + 1}. {products[i].Name}, from our {value.Title} collection, costs ${products[i].Price}");
 
     }
@@ -149,10 +150,36 @@ void AddProduct()
 
 }
 
-//void updateproduct(list<product> products, list<producttype> producttypes)
-//{
-//    throw new notimplementedexception();
-//}
+void UpdateProduct()
+{
+    DisplayAllProducts();
+    Console.WriteLine();
+
+    Console.WriteLine("Please select the item to update: ");
+    var itemIndex = Convert.ToInt32( Console.ReadLine() );
+
+    var item = products[itemIndex - 1];
+
+    Console.WriteLine("Enter new name: ");
+    var newName = Console.ReadLine();
+    Console.WriteLine("Enter new price: ");
+    var newPrice = Convert.ToDecimal(Console.ReadLine());
+    Console.WriteLine("Update Product Type");
+    foreach (ProductType type in productTypes)
+    {
+        var index = productTypes.IndexOf(type);
+        Console.WriteLine($"{index + 1}. {type.Title}");
+    }
+    var newProdType = Convert.ToInt32(Console.ReadLine());
+
+
+    //Update properties
+    item.Name = newName;
+    item.Price = newPrice;
+    item.ProductTypeId = newProdType;
+
+
+}
 
 //don't move or change this!
 public partial class Program { }
