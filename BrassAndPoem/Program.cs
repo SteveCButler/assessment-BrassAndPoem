@@ -65,59 +65,47 @@ while (choice != "5")
 }
 void DisplayMenu()
 {
+    Console.WriteLine();
     Console.WriteLine(@"
-1. Display All Products
-2. Delete a product
-3. Add a new product
-4. Update product properties
-5. Exit
-");
+    ---------MENU---------
+    1. Display All Products
+    2. Delete Product
+    3. Add Product
+    4. Update Product
+    5. Exit
+    ");
+
+    Console.Write(@"Choice: ");
     choice = Console.ReadLine();
-    
-    //int choiceId = int.Parse(choice);
-    //switch (choiceId)
-    //{
-    //    case 1:
-    //        DisplayAllProducts();
-    //        break;
-    //    case 2:
-    //        DeleteProduct();
-    //        break;
-    //    case 3:
-    //        AddProduct();
-    //        break;
-    //    case 4:
-    //        UpdateProduct();
-    //        break;
-    //    case 5:
-    //        return;
+    Console.WriteLine();
 
-    //}
+    int choiceId = int.Parse(choice);
+    switch (choiceId)
+    {
+        case 1:
+            DisplayAllProducts();
+            break;
+        case 2:
+            DeleteProduct();
+            break;
+        case 3:
+            AddProduct();
+            break;
+        case 4:
+            UpdateProduct();
+            break;
+        case 5:
+            return;
 
-    if (choice == "1")
-    {
-        DisplayAllProducts();
     }
-    else if (choice == "2")
-    {
-        DeleteProduct();
-    }
-    else if (choice == "3")
-    {
-        AddProduct();
-    }
-    else if (choice == "4")
-    {
-        UpdateProduct();
-    }
-    else if(choice == "5")
-    {
-        return;
-    }
+
+
 }
 
 void DisplayAllProducts()
 {
+    Console.Clear();
+
     for (int i = 0; i < products.Count; i++)
     {
         var value = productTypes.First(p => p.Id == products[i].ProductTypeId);
@@ -130,6 +118,7 @@ void DisplayAllProducts()
 void DeleteProduct()
 {
     DisplayAllProducts();
+    Console.WriteLine();
     Console.WriteLine("Select the product you wish to delete: ");
 
     int productToDelete = Convert.ToInt32( Console.ReadLine() );
@@ -161,6 +150,7 @@ void AddProduct()
             ProductTypeId = prodType
 
         });
+   
 
 }
 
@@ -173,30 +163,53 @@ void UpdateProduct()
 
     var item = products[itemIndex - 1];
 
-    try
-    {
+    
         Console.Write("Enter new name: ");
         var newName = Console.ReadLine();
-        Console.Write("Enter new price: ");
-        var newPrice = Convert.ToDecimal(Console.ReadLine());
-        Console.WriteLine("Update Product Type");
+    if (String.IsNullOrEmpty(newName))
+    {
+        //Console.WriteLine("The product was not updated, please enter valid response to all prompts.");
+
+    }
+    else
+    {
+        //Update properties
+        item.Name = newName;
+    }
+    Console.Write("Enter new price: ");
+        var newPrice = Console.ReadLine();
+    if (String.IsNullOrEmpty(newPrice))
+    {
+        //Console.WriteLine("The product was not updated, please enter valid response to all prompts.");
+
+    }
+    else
+    {
+        //Update properties
+        item.Price = Convert.ToDecimal(newPrice);
+    }
+
+    Console.WriteLine("Update Product Type");
         foreach (ProductType type in productTypes)
         {
             var index = productTypes.IndexOf(type);
             Console.WriteLine($"{index + 1}. {type.Title}");
         }
-        var newProdType = Convert.ToInt32(Console.ReadLine());
+        var newProdType = Console.ReadLine();
 
-
-        //Update properties
-        item.Name = newName;
-        item.Price = newPrice;
-        item.ProductTypeId = newProdType;
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine("The product was not updated, please enter valid response to all prompts.");
-    }
+        if (String.IsNullOrEmpty(newProdType))
+        {
+            //Console.WriteLine("The product was not updated, please enter valid response to all prompts.");
+            
+        }
+        else
+        {
+            //Update properties
+            item.ProductTypeId = Convert.ToInt32(newProdType);
+        }
+        
+    
+    
     
 
 
