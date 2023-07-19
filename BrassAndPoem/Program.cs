@@ -1,10 +1,10 @@
 ﻿
-//create a "products" variable here to include at least five Product instances. Give them appropriate ProductTypeIds.
-using System.Diagnostics;
+
+using System;
 using System.Linq;
-using System.Numerics;
-using System.Security.Cryptography;
 using BrassAndPoem;
+
+//create a "products" variable here to include at least five Product instances. Give them appropriate ProductTypeIds.
 
 List<Product> products = new List<Product>
 {
@@ -37,7 +37,7 @@ List<Product> products = new List<Product>
 
 };
 //create a "productTypes" variable here with a List of ProductTypes, and add "Brass" and "Poem" types to the List. 
-List<ProductType> productTypes = new List<ProductType>
+ List<ProductType> productTypes = new List<ProductType>
 {
     new ProductType
     {
@@ -74,6 +74,7 @@ void DisplayMenu()
     4. Update Product
     5. Exit
     ");
+
     Console.Write(@"Choice: ");
     choice = Console.ReadLine();
     Console.WriteLine();
@@ -91,20 +92,24 @@ void DisplayMenu()
             AddProduct();
             break;
         case 4:
-           // UpdateProduct();
+            UpdateProduct();
+            break;
         case 5:
             return;
 
     }
+
+
 }
 
 void DisplayAllProducts()
 {
+    Console.Clear();
+
     for (int i = 0; i < products.Count; i++)
     {
         var value = productTypes.First(p => p.Id == products[i].ProductTypeId);
-        //Console.WriteLine(value.Title);
-        
+               
         Console.WriteLine($"{i + 1}. {products[i].Name}, from our {value.Title} collection, costs ${products[i].Price}");
 
     }
@@ -124,7 +129,6 @@ void DeleteProduct()
 
 void AddProduct()
 {
-    Console.WriteLine();
     Console.Write("Enter the name of the product: ");
     var productName = Console.ReadLine();
     Console.Write("Enter the price: ");
@@ -146,13 +150,70 @@ void AddProduct()
             ProductTypeId = prodType
 
         });
+   
 
 }
 
-//void updateproduct(list<product> products, list<producttype> producttypes)
-//{
-//    throw new notimplementedexception();
-//}
+void UpdateProduct()
+{
+    DisplayAllProducts();
+    
+    Console.WriteLine("Please select the item to update: ");
+    var itemIndex = Convert.ToInt32( Console.ReadLine() );
+
+    var item = products[itemIndex - 1];
+
+    
+        Console.Write("Enter new name: ");
+        var newName = Console.ReadLine();
+    if (String.IsNullOrEmpty(newName))
+    {
+        //Console.WriteLine("The product was not updated, please enter valid response to all prompts.");
+
+    }
+    else
+    {
+        //Update properties
+        item.Name = newName;
+    }
+    Console.Write("Enter new price: ");
+        var newPrice = Console.ReadLine();
+    if (String.IsNullOrEmpty(newPrice))
+    {
+        //Console.WriteLine("The product was not updated, please enter valid response to all prompts.");
+
+    }
+    else
+    {
+        //Update properties
+        item.Price = Convert.ToDecimal(newPrice);
+    }
+
+    Console.WriteLine("Update Product Type");
+        foreach (ProductType type in productTypes)
+        {
+            var index = productTypes.IndexOf(type);
+            Console.WriteLine($"{index + 1}. {type.Title}");
+        }
+        var newProdType = Console.ReadLine();
+
+        if (String.IsNullOrEmpty(newProdType))
+        {
+            //Console.WriteLine("The product was not updated, please enter valid response to all prompts.");
+            
+        }
+        else
+        {
+            //Update properties
+            item.ProductTypeId = Convert.ToInt32(newProdType);
+        }
+        
+    
+    
+    
+
+
+}
 
 //don't move or change this!
 public partial class Program { }

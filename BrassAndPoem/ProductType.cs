@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BrassAndPoem
 {
-    internal class ProductType
+    public class ProductType
     {
         public string Title { get; set; }
         public int Id { get; set; }
