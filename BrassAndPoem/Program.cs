@@ -1,11 +1,10 @@
 ﻿
-//create a "products" variable here to include at least five Product instances. Give them appropriate ProductTypeIds.
+
 using System;
-using System.Diagnostics;
 using System.Linq;
-using System.Numerics;
-using System.Security.Cryptography;
 using BrassAndPoem;
+
+//create a "products" variable here to include at least five Product instances. Give them appropriate ProductTypeIds.
 
 List<Product> products = new List<Product>
 {
@@ -66,37 +65,54 @@ while (choice != "5")
 }
 void DisplayMenu()
 {
-    Console.WriteLine();
     Console.WriteLine(@"
-    ---------MENU---------
-    1. Display All Products
-    2. Delete A Product
-    3. Add New Product
-    4. Update Product Properties
-    5. Exit
-    ");
-    Console.Write(@"Choice: ");
+1. Display All Products
+2. Delete a product
+3. Add a new product
+4. Update product properties
+5. Exit
+");
     choice = Console.ReadLine();
-    Console.WriteLine();
+    
+    //int choiceId = int.Parse(choice);
+    //switch (choiceId)
+    //{
+    //    case 1:
+    //        DisplayAllProducts();
+    //        break;
+    //    case 2:
+    //        DeleteProduct();
+    //        break;
+    //    case 3:
+    //        AddProduct();
+    //        break;
+    //    case 4:
+    //        UpdateProduct();
+    //        break;
+    //    case 5:
+    //        return;
 
-    int choiceId = int.Parse(choice);
-    switch (choiceId)
+    //}
+
+    if (choice == "1")
     {
-        case 1:
-            DisplayAllProducts();
-            break;
-        case 2:
-            DeleteProduct();
-            break;
-        case 3:
-            AddProduct();
-            break;
-        case 4:
-            UpdateProduct();
-            break;
-        case 5:
-            return;
-
+        DisplayAllProducts();
+    }
+    else if (choice == "2")
+    {
+        DeleteProduct();
+    }
+    else if (choice == "3")
+    {
+        AddProduct();
+    }
+    else if (choice == "4")
+    {
+        UpdateProduct();
+    }
+    else if(choice == "5")
+    {
+        return;
     }
 }
 
@@ -114,7 +130,6 @@ void DisplayAllProducts()
 void DeleteProduct()
 {
     DisplayAllProducts();
-    Console.WriteLine();
     Console.WriteLine("Select the product you wish to delete: ");
 
     int productToDelete = Convert.ToInt32( Console.ReadLine() );
@@ -125,7 +140,6 @@ void DeleteProduct()
 
 void AddProduct()
 {
-    Console.WriteLine();
     Console.Write("Enter the name of the product: ");
     var productName = Console.ReadLine();
     Console.Write("Enter the price: ");
@@ -153,30 +167,37 @@ void AddProduct()
 void UpdateProduct()
 {
     DisplayAllProducts();
-    Console.WriteLine();
-
+    
     Console.WriteLine("Please select the item to update: ");
     var itemIndex = Convert.ToInt32( Console.ReadLine() );
 
     var item = products[itemIndex - 1];
 
-    Console.WriteLine("Enter new name: ");
-    var newName = Console.ReadLine();
-    Console.WriteLine("Enter new price: ");
-    var newPrice = Convert.ToDecimal(Console.ReadLine());
-    Console.WriteLine("Update Product Type");
-    foreach (ProductType type in productTypes)
+    try
     {
-        var index = productTypes.IndexOf(type);
-        Console.WriteLine($"{index + 1}. {type.Title}");
+        Console.Write("Enter new name: ");
+        var newName = Console.ReadLine();
+        Console.Write("Enter new price: ");
+        var newPrice = Convert.ToDecimal(Console.ReadLine());
+        Console.WriteLine("Update Product Type");
+        foreach (ProductType type in productTypes)
+        {
+            var index = productTypes.IndexOf(type);
+            Console.WriteLine($"{index + 1}. {type.Title}");
+        }
+        var newProdType = Convert.ToInt32(Console.ReadLine());
+
+
+        //Update properties
+        item.Name = newName;
+        item.Price = newPrice;
+        item.ProductTypeId = newProdType;
     }
-    var newProdType = Convert.ToInt32(Console.ReadLine());
-
-
-    //Update properties
-    item.Name = newName;
-    item.Price = newPrice;
-    item.ProductTypeId = newProdType;
+    catch (Exception ex)
+    {
+        Console.WriteLine("The product was not updated, please enter valid response to all prompts.");
+    }
+    
 
 
 }
